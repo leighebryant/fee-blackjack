@@ -24,7 +24,6 @@ function runGame() {
         var cardValue = 0;
 
         cards.forEach(function(card) {
-debugger;
             if (card === 'J' || card === 'Q' || card === 'K')
                 cardValue = cardValue + 10;
 
