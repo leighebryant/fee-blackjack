@@ -6,8 +6,8 @@ function runGame() {
     function hit() {
 
         var card = (Math.floor(Math.random() * cards.length));
-        display.innerHTML = cards[card];
-        checkResult(false, true);
+        display.innerHTML = display.innerHTML + ' ' + cards[card];
+        checkResult(false);
     }
     /**
      * Check the result of the current cards and alert the game result
@@ -18,54 +18,52 @@ function runGame() {
      */
 
 
-    function checkResult(standing, hitting) {
-        // cards = display.innerHTML.split(' ');
+    function checkResult(standing) {
+        var hand = display.innerHTML.split(' ');
 
         var cardValue = 0;
 
-        cards.forEach(function(card) {
-            if (card === 'J' || card === 'Q' || card === 'K')
-                cardValue = cardValue + 10;
+        hand.forEach(function(card, i) {
+          if (Number(card)) {
+              cardValue = cardValue + Number(card);
+          }
+          if (card === 'J' || card === 'Q' || card === 'K'){
+                cardValue = cardValue + 10;}
 
-            else if (card === 'A') {
-                cardValue = cardValue + 11;
-            }
-            else {
-                card = Number(card);
-                cardValue = cardValue + card;
-            }
+          if (card === 'A') {
+                cardValue = cardValue + 11;}
         });
 
         if (cardValue <= 15 && standing) {
             alert('Dealer wins.');
         }
-        if (cardValue <= 18 && standing) {
+        else if (cardValue <= 18 && standing) {
             alert('Push!');
         }
         if (cardValue > 21) {
             alert('You Bust.');
         }
-        if (cardValue > 18 && hitting || cardValue === 21) {
+        else if (cardValue > 18 && standing || cardValue === 21) {
             alert('You win!');
         }
 
 
-        display.innerHTML = ' ';
+        display.innerHTML = display.innerHTML;
         card = (Math.round(Math.random() * cards.length));
-        display.innerHTML = cards[card];
+        // display.innerHTML = cards[card];
     }
 
-    document.getElementById('stand').addEventListener('click', function(){checkResult(true, false);
+    document.getElementById('stand').addEventListener('click', function(){checkResult(true);
     });
 
     document.getElementById('hit').addEventListener('click', function(){hit();
     });
-    checkResult();
+    checkResult(false);
 
-    // card = (Math.floor(Math.random() * cards.length));
-    // display.innerHTML = cards[card];
+    card = (Math.floor(Math.random() * cards.length));
+    display.innerHTML = cards[card];
 
-    var card = (Math.floor(Math.random() * cards.length));
+    card = (Math.floor(Math.random() * cards.length));
     display.innerHTML = display.innerHTML + ' ' + cards[card];
 }
 runGame();
